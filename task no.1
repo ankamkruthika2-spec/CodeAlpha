@@ -1,0 +1,23 @@
+import pandas as pd
+
+df = pd.read_csv("C:/Users/ADMIN/Downloads/archive (2)/Iris.csv")
+
+print("IRIS FLOWER DATASET ANALYSIS")
+print("----------------------------")
+
+print("Dataset Shape:")
+print(df.shape)
+
+print("\nColumns:")
+print(df.columns)
+
+print("\nSpecies Count:")
+print(df['Species'].value_counts())
+
+print("\nAverage Measurements:")
+print(df.describe())
+
+print("\nSample Records:")
+print(df.head())
+
+print("\nTask Completed Successfully!")
