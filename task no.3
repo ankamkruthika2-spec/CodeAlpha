@@ -1,0 +1,52 @@
+import pandas as pd
+
+# Load dataset
+df = pd.read_csv("C:/Users/ADMIN/Downloads/archive (5)/Advertising.csv")
+
+# Remove extra index column if present
+if 'Unnamed: 0' in df.columns:
+    df = df.drop('Unnamed: 0', axis=1)
+
+print("Dataset Preview:")
+print(df.head())
+
+# Features
+X = df[['TV', 'Radio', 'Newspaper']]
+y = df['Sales']
+
+# Convert to lists
+X = X.values
+y = y.values
+
+# Add bias term (x0 = 1)
+m = len(y)
+
+X_b = []
+for i in range(m):
+    X_b.append([1, X[i][0], X[i][1], X[i][2]])
+
+# Convert back to simple matrix
+import numpy as np
+X_b = np.array(X_b)
+
+# Normal Equation: θ = (X^T X)^-1 X^T y
+theta = np.linalg.inv(X_b.T.dot(X_b)).dot(X_b.T).dot(y)
+
+print("\nModel Coefficients:")
+print("Intercept:", theta[0])
+print("TV:", theta[1])
+print("Radio:", theta[2])
+print("Newspaper:", theta[3])
+
+# Prediction function
+def predict(tv, radio, newspaper):
+    return theta[0] + theta[1]*tv + theta[2]*radio + theta[3]*newspaper
+
+# Example prediction
+tv = 150
+radio = 25
+news = 30
+
+print("\nPrediction Example:")
+print("TV=150, Radio=25, Newspaper=30")
+print("Predicted Sales:", predict(tv, radio, news))
